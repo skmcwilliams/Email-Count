@@ -3,6 +3,9 @@ import pandas as pd
 import sqlite3
 from bokeh.io import show, output_file
 from bokeh.plotting import figure
+from bokeh.models import ColumnDataSource
+from bokeh.palettes import Turbo256
+import traceback
 
 #Form SQL connection
 con = sqlite3.connect('emaildb.sqlite')
@@ -16,6 +19,7 @@ idx = df['org'].tolist()
 idy = df['count'].tolist()
 idy.sort()
 
+#Check Dataframe 
 """
 #Check dataframe
 print(df)
@@ -25,18 +29,21 @@ print(idy)
 
 """
 
+#Create vbar chart from dataframe
+source = ColumnDataSource(data=dict(idx=idx, idy=idy, color=Turbo256))
 
-#Create bar chart from dataframe
-p = figure(x_range=idx, plot_width=1800,
+p = figure(x_range=idx, plot_width=1900,
            plot_height=500, title="Email Count by Organization",
-           toolbar_location=None, tools="pan,reset,save,wheel_zoom")
+           toolbar_location="left", tools="pan,reset,save,wheel_zoom")
 
-p.vbar(x=idx, top=idy, width=1, color="#c9d9d3", legend_label=str(idy))
+p.vbar(x='idx', top='idy', width=1, color="color", legend_field='idy',source=source)
+p.line(x=idx, y=idy, color="Chartreuse", line_width=2)
 
-p.x_range.range_padding = 0.1
+p.x_range.range_padding = 0
 p.xgrid.grid_line_color = None
 p.legend.location = "top_center"
 p.legend.orientation = "horizontal"
+p.title.align = 'center'
 
 try: 
     show(p)
