@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 import sqlite3
-from bokeh.io import show, output_file
-from bokeh.plotting import figure
+from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource
 from bokeh.palettes import Turbo256
 import traceback
@@ -49,5 +48,5 @@ try:
     show(p)
 except Exception:
     traceback.print_exc()
-print("View " + output_file + ' in browser')
+print('View file in browser')
 cur.close()
