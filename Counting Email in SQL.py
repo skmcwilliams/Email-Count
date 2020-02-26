@@ -41,7 +41,7 @@ print(y)
 source = ColumnDataSource(data=dict(x=x, y=y, color=Turbo256))
 
 p = figure(x_range=x, plot_width=1900,
-           plot_height=750, title="Email Count by Organization",
+           plot_height=1000, title="Email Count by Organization",
            toolbar_location="left", tools="pan,reset,save,wheel_zoom")
 
 p.vbar(x='x', top='y', width=1, color="color", legend_field='y',source=source)
